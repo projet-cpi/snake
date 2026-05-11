@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Fenetre_jeu {
     private int nombre;
-
+    private Sauvegarde sauvegarde =new Sauvegarde("sauvrecord");
     public int getNombre() {
         return nombre;
     }
