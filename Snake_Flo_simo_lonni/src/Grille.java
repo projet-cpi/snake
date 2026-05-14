@@ -21,6 +21,16 @@ public class Grille {
 			}
 		}
 	}
+	
+	// Getter nombre de lignes
+    public int getNblig() {
+        return nblig;
+    }
+
+    // Getter nombre de colonnes
+    public int getNbCol() {
+        return nbCol;
+    }
 	//Methodes
 	
 	public void afficher() {
