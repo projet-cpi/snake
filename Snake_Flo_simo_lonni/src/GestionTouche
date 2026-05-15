@@ -1,0 +1,60 @@
+import javax.swing.*;
+import java.awt.event.*;
+
+public class GestionTouche extends JFrame implements KeyListener {
+
+    private boolean capturing = false;
+    private String lastKey = null;
+    private String directionEnAttente = "RIGHT"; // direction par défaut
+
+    public GestionTouche() {
+        setUndecorated(true);
+        setOpacity(0f);
+        setSize(1, 1);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addKeyListener(this);
+        setFocusable(true);
+    }
+
+    public void startCapture() {
+        capturing = true;
+        setVisible(true);
+        requestFocus();
+    }
+
+    public void stopCapture() {
+        capturing = false;
+        dispose();
+    }
+
+    // ✅ Retourne la direction traduite directement
+    public String getDirection() throws InterruptedException {
+        lastKey = null;
+        while (lastKey == null) {
+            Thread.sleep(50);
+        }
+        return directionEnAttente;
+    }
+
+    public String getLastKey() {
+        return lastKey;
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (!capturing) return;
+        lastKey = KeyEvent.getKeyText(e.getKeyCode());
+
+        // ✅ Traduction touche -> direction directement ici
+        directionEnAttente = switch (lastKey) {
+            case "Z", "Up"    -> "UP";
+            case "S", "Down"  -> "DOWN";
+            case "Q", "Left"  -> "LEFT";
+            case "D", "Right" -> "RIGHT";
+            default -> directionEnAttente; // garde la même si touche inconnue
+        };
+    }
+
+    @Override public void keyReleased(KeyEvent e) {}
+    @Override public void keyTyped(KeyEvent e) {}
+}
