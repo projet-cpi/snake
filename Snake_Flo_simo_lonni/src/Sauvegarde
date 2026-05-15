@@ -1,0 +1,48 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Collections;
+
+
+public class Sauvegarde {
+		private String nomFichier;
+		public Sauvegarde (String nomFichier) {
+			
+			this.nomFichier = nomFichier;
+			NeedFichier();
+			
+		}
+		
+		private void NeedFichier() {
+			File fichier = new File(nomFichier);
+			
+			try {
+				if (fichier.createNewFile()) {
+					
+					FileWriter writer = new FileWriter (nomFichier, true );
+					writer.write("pseudo,score,temps \n");
+					writer.close ();
+				}
+			}  catch (IOException e) {
+	            System.out.println("Erreur lors de la création du fichier CSV.");
+	        }
+		}
+		
+		public void saveScore(String pseudo,int score, int temps ) {
+			pseudo = pseudo.replace(",", "_"); //pour eviter les virgules dans les pseudos qui sont donc remplacer par le "_"
+			
+			try {
+				FileWriter writer = new FileWriter(nomFichier, true);
+				
+				writer.write(pseudo + "," +score+ "," +temps+ "\n");
+				writer.close();
+			} catch (IOException e) {
+	            System.out.println("Erreur lors de l'enregistrement du score.");
+		}
+
+	}
+}
