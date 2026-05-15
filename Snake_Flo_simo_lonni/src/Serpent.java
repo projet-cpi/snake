@@ -1,9 +1,10 @@
+import java.awt.Point;
 
 public class Serpent {
-	private int[] head ;
-	private int[][] body;     
+	private int[] head ={5, 5};
+	private int[][] body = {{4, 5}};    
 	private int taille;
-	private char direction='d';
+	private Point direction = new Point(1, 0);
 	
 	
 	
@@ -29,7 +30,15 @@ public class Serpent {
 	public void setTaille() {
 		this.taille += 1;
 	}
-	
+	 public boolean setDirection(String touche) {
+	        switch (touche) {
+	            case "UP"    ->{ if (direction.y != 1)  direction = new Point(0, -1);return true ; }
+	            case "DOWN"  -> { if (direction.y != -1) direction = new Point(0,  1);return true ; }
+	            case "LEFT"  -> { if (direction.x != 1)  direction = new Point(-1, 0);return true ;}
+	            case "RIGHT" -> { if (direction.x != -1) direction = new Point(1,  0); return true;}
+	        }
+	        return false;
+	    }
 	
 	
 	public boolean collision_with(int[] coord) {
@@ -45,7 +54,7 @@ public class Serpent {
 	void scal(int[]coord_pomme){
 		
 		setTaille();
-		int[][]resultat =new int[taille][2];
+		int[][]resultat = new int[taille][2];
 		resultat[0]=this.head;
 		
 		
@@ -54,68 +63,48 @@ public class Serpent {
 			resultat[i]=this.body[i-1];
 		}
 		
-		this.head=coord_pomme;
+		this.head = coord_pomme;
+		this.body = resultat;
 			
 		}
 	
 	boolean verif_eat(int []head_future,int[][] tab_pomme) {
 		for(int[]pomme : tab_pomme) {
-			if((pomme[0]==head[0])&(pomme[1]==head_future[1])){
+			if ((pomme[0] == head_future[0]) && (pomme[1] == head_future[1])){
 				return true ;
 			}
 		}
 		return false;
 	}
 	
-	boolean move(char d) {
-		if((this.direction=='l'&& d=='r')||(this.direction=='r'&& d=='l')||(this.direction=='t'&& d=='b')||(this.direction=='b'&& d=='t')){
-			return false;
-		}
+	boolean move(String touche) {
+		if(setDirection(touche)) {
+			
 		
-		int[][]resultat=new int[taille][2];
+		int[] future_head = {head[0]+direction.x,head[1]+direction.y};
+		int[][] pomme ={ {0,1}} ;
+		
+		if(verif_eat(future_head,pomme)){
+			this.scal(future_head);
+			return true ;
+			
+		}
+		int[][]resultat = new int[taille][2];
 		resultat[0]=this.head;
 		
-		for(int i=1;i<taille;i++){
+		
+		for(int i=1;i<taille;i++) {
 			
-			resultat[i]=this.body[i];
-			
-		}
-		int[][]pommes= {{2,3},{3,2}};
-		switch(d) {
-		case 'r':
-			int[]head_r= {head[0]-1,head[1]};
-			if(verif_eat(head_r,pommes)==true) {
-				scal(head_r);
-				return true;	
-			}
-			this.head[0]-=1;
-			
-		case 'l':
-			int[]head_l= {head[0]+=1,head[1]};
-			if(verif_eat(head_l,pommes)==true) {
-				scal(head_l);
-				return true;	
-			}
-			this.head[0]+=1;
-			
-		case 't':
-			int[]head_t= {head[0],head[1]-=1};
-			if(verif_eat(head_t,pommes)==true) {
-				scal(head_t);
-				return true;	
-			}
-			this.head[1]-=1;
-			
-		case 'd':
-			int[]head_d= {head[0],head[1]+=1};
-			if(verif_eat(head_d,pommes)==true) {
-				scal(head_d);
-				return true;	
-			}
-			this.head[1]+=1;
+			resultat[i]=this.body[i-1];
 		}
 		
+		this.head = future_head;
+		this.body = resultat;
+		
+		
 		return true;
+		}
+		return false;
 		
 	}
 
