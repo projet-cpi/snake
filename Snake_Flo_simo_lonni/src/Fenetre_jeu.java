@@ -2,16 +2,19 @@ import java.util.Scanner;
 
 public class Fenetre_jeu {
     private int nombre;
-    private Sauvegarde sauvegarde =new Sauvegarde("sauvrecord");
+    private Sauvegarde sauvegarde = new Sauvegarde("sauvrecord"); // Fichier de sauvegarde du record
+
     public int getNombre() {
         return nombre;
     }
 
+    // Constructeur : lance le jeu avec un message d'accueil
     Fenetre_jeu() {
         System.out.println("Bienvenu sur Snake");
         boucle_jeu();
     }
 
+    // Affiche les règles du jeu et attend que le joueur appuie sur 1 pour quitter
     public void regle() {
     	 System.out.println("\n");
     	    System.out.println("╔═════════════════════════════════════════════════════════╗");
@@ -61,33 +64,32 @@ public class Fenetre_jeu {
             switch (regle) {
                 case "1":
                     System.out.println("vous avez quitté les regles");
-                    return;
+                    return; // Retour au menu principal
             }
         }
     }
 
+    // Menu principal : règles, jouer ou quitter
     public void boucle_jeu() {
         Scanner __sc_boucle__ = new Scanner(System.in);
         while (true) {
             System.out.println("que voulez vous faire ? 1 pour les regles ; 2 pour jouer ; 3 pour quitter");
-            String boucle = __sc_boucle__.nextLine(); 
+            String boucle = __sc_boucle__.nextLine();
             switch (boucle) {
                 case "1":
-                    System.out.println("voici les regles");
-                    regle();
+                    regle(); // Affiche les règles
                     break;
                 case "2":
-                    System.out.println("voici les modes de jeux");
-                    modejeux(nombre);
+                    modejeux(nombre); // Passe au choix du niveau
                     break;
                 case "3":
                     System.out.println("vous avez quitté le jeu");
-                    return;
+                    return; // Quitte le programme
             }
-          
         }
     }
 
+    // Menu de sélection du niveau de difficulté
     public void modejeux(int nombre) {
         Scanner __sc_mode__ = new Scanner(System.in);
         while (true) {
@@ -95,21 +97,22 @@ public class Fenetre_jeu {
             String mode = __sc_mode__.nextLine();
             switch (mode) {
                 case "1":
-                    System.out.println("vous avez choisi le niveau 1");
+                    System.out.println("vous avez choisi le niveau 1"); // Vitesse lente
                     break;
                 case "2":
-                    System.out.println("vous avez choisi le niveau 2");
+                    System.out.println("vous avez choisi le niveau 2"); // Vitesse normale
                     break;
                 case "3":
-                    System.out.println("vous avez choisi le niveau 3");
+                    System.out.println("vous avez choisi le niveau 3"); // Vitesse rapide
                     break;
                 case "4":
                     System.out.println("vous avez quitté les modes de jeux");
-                    return;
+                    return; // Retour au menu principal
             }
         }
     }
 
+    // Boucle de jeu : attend que le joueur appuie sur 1 pour quitter
     public void jeu(int n) {
         Scanner __sc_option__ = new Scanner(System.in);
         while (true) {
@@ -118,7 +121,7 @@ public class Fenetre_jeu {
             switch (option) {
                 case "1":
                     System.out.println("vous avez quitté");
-                    return;
+                    return; // Fin de la partie
             }
         }
     }
