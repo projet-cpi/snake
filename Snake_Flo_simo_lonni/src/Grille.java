@@ -1,4 +1,3 @@
-```java
 import java.util.*;
 
 public class Grille {
@@ -51,4 +50,4 @@ public class Grille {
         }
     }
 }
-```
+
